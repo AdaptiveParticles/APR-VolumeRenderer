@@ -1,0 +1,6 @@
+[submodule "LibAPR-java-wrapper"]
+	path = LibAPR-java-wrapper
+	url = https://github.com/krzysg/LibAPR-java-wrapper.git
+[submodule "jogl-minimal"]
+	path = jogl-minimal
+	url = https://github.com/tpietzsch/jogl-minimal.git
