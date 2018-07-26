@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>krzysg.apr-bigdataviewer</groupId>
-        <artifactId>apr-bigdataviewer</artifactId>
+        <groupId>krzysg.apr-volumerenderer</groupId>
+        <artifactId>apr-volumerenderer</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <name>Viewer for APR files - application</name>
-    <groupId>krzysg.apr-bigdataviewer.AprViewer</groupId>
-    <artifactId>AprViewer</artifactId>
+    <name>Volume renderer for APR files - application</name>
+    <groupId>krzysg.apr-volumerenderer.AprVolumeRenderer</groupId>
+    <artifactId>AprVolumeRenderer</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
     <repositories>
@@ -27,6 +27,11 @@
             <groupId>mosaic</groupId>
             <artifactId>libapr-java-wrapper</artifactId>
             <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scijava</groupId>
+            <artifactId>jogl-minimal</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
         <groupId>sc.fiji</groupId>

@@ -7,18 +7,19 @@
     <parent>
         <groupId>org.scijava</groupId>
         <artifactId>pom-scijava</artifactId>
-        <version>22.3.0</version>
+        <version>23.1.1</version>
     </parent>
 
     <name>Viewer for APR files</name>
-    <groupId>krzysg.apr-bigdataviewer</groupId>
-    <artifactId>apr-bigdataviewer</artifactId>
+    <groupId>krzysg.apr-volumerenderer</groupId>
+    <artifactId>apr-volumerenderer</artifactId>
     <version>0.0.1</version>
 
     <packaging>pom</packaging>
     <modules>
         <module>LibAPR-java-wrapper</module>
-        <module>AprViewer</module>
+        <module>jogl-minimal</module>
+        <module>AprVolumeRenderer</module>
     </modules>
 
     <!-- scijava enforcer required fields -->
