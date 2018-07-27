@@ -19,6 +19,7 @@ mvn pakcage -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 
 ## Output
 Example visualization:
+
 ![skull and head images](doc/example.png/?raw=true)
 
 
