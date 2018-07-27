@@ -18,7 +18,7 @@ mvn pakcage -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 ```
 
 ## Output
-Example visualization:
+<img src="./doc/movieSmallNormalized.gif?raw=true">
 
 ![skull and head images](doc/example.png/?raw=true)
 
