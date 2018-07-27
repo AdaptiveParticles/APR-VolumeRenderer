@@ -9,7 +9,7 @@ git clone --recurse https://github.com/krzysg/APR-VolumeRenderer.git
 ```
 * build java app
 ```
-cd LibAPR-VolumeRenderer
+cd APR-VolumeRenderer
 mvn pakcage -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 ```
 * run app
