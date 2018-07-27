@@ -1,5 +1,13 @@
 package krzysg;
 
+/**
+ * APR Volume Viewer
+ *
+ * Copyright (C) 2018
+ * Tobias Pietzsch
+ * Krzysztof Gonciarz (adapted from Example9 from jogl-minimal by Tobias)
+ */
+
 import bdv.cache.CacheControl;
 import bdv.spimdata.SequenceDescriptionMinimal;
 import bdv.spimdata.SpimDataMinimal;
