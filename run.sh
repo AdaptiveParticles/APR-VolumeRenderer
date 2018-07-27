@@ -1,4 +1,3 @@
 #!/bin/bash
 
- java -cp AprViewer/target/AprViewer-jar-with-dependencies.jar krzysg.AprViewer "$@"
-
+java -cp ./AprVolumeRenderer/target/AprViewer-jar-with-dependencies.jar krzysg.AprVolumeRenderer "$@"

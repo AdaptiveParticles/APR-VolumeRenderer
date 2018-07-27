@@ -79,9 +79,9 @@ import static com.jogamp.opengl.GL2ES2.GL_TEXTURE_3D;
 import static tpietzsch.backend.Texture.InternalFormat.R16;
 
 
-import static krzysg.Example9.RepaintType.*;
+import static krzysg.AprVolumeRenderer.RepaintType.*;
 
-public class Example9 implements GLEventListener, RequestRepaint
+public class AprVolumeRenderer implements GLEventListener, RequestRepaint
 {
 	private final OffScreenFrameBuffer offscreen;
 
@@ -149,7 +149,7 @@ public class Example9 implements GLEventListener, RequestRepaint
 	private final SetupAssignments setupAssignments;
 
 
-	public Example9(
+	public AprVolumeRenderer(
 			final SpimDataMinimal spimData,
 			final Runnable frameRequestRepaint,
 			final int renderWidth,
@@ -685,7 +685,7 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 		io.restoreFromXml( root.getChild( io.getTagName() ), state );
 		setupAssignments.restoreFromXml( root );
 		manualTransformation.restoreFromXml( root );
-		System.out.println( "Example9.loadSettings" );
+		System.out.println( "AprVolumeRenderer.loadSettings" );
 	}
 
 	public boolean tryLoadSettings( final String xmlFilename )
@@ -820,9 +820,9 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 				throw new IllegalArgumentException( "unsupported dither width" );
 		}
 
-		final InputFrame frame = new InputFrame( "Example9", windowWidth, windowHeight );
+		final InputFrame frame = new InputFrame( "AprVolumeRenderer", windowWidth, windowHeight );
 		InputFrame.DEBUG = false;
-		final Example9 glPainter = new Example9(
+		final AprVolumeRenderer glPainter = new AprVolumeRenderer(
 				spimData,
 				frame::requestRepaint,
 				renderWidth,
@@ -888,9 +888,14 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 
 	public static void main( final String[] args ) throws SpimDataException
 	{
-		final String xmlFilename = "/Users/krzysg/zebra7GB.h5";
+	    // ------------ Verify input arguments -------------------
+		if (args.length != 1) {
+			System.err.println("Please provide exactly one APR file as a argument. Instead you provided: " + Arrays.asList(args));
+			return;
+		}
 
-		final String inputFileName = xmlFilename;
+		final String inputFileName = args[0];
+
 		final File inputFile = new File(inputFileName);
 		if (!inputFile.exists() || inputFile.isDirectory()) {
 			System.err.println("Input file must be a regular file instead you provided: " + inputFile);
@@ -922,7 +927,7 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 		calibration.set(
 				1, 0, 0, 0,
 				0, 1, 0, 0,
-				0, 0, 4, 0 );
+				0, 0, 1, 0 );
 		registrations.put( new ViewId( timepointId, setupId ), new ViewRegistration(timepointId, setupId, calibration) );
 
 		final SpimDataMinimal spimData = new SpimDataMinimal( basePath, seq, new ViewRegistrations(registrations) );

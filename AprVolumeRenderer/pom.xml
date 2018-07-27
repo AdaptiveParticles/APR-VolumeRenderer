@@ -52,7 +52,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>krzysg.AprViewer</mainClass>
+                            <mainClass>krzysg.AprVolumeRenderer</mainClass>
                         </manifest>
                     </archive>
                     <!--<appendAssemblyId>false</appendAssemblyId>-->

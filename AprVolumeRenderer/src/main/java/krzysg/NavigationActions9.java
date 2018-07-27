@@ -58,7 +58,7 @@ public class NavigationActions9 extends Actions
 	 */
 	public static void installActionBindings(
 			final InputActionBindings inputActionBindings,
-			final Example9 viewer,
+			final AprVolumeRenderer viewer,
 			final KeyStrokeAdder.Factory keyProperties )
 	{
 		final NavigationActions9 actions = new NavigationActions9( keyProperties );
@@ -75,7 +75,7 @@ public class NavigationActions9 extends Actions
 		super( keyConfig, new String[] { "bdv", "navigation" } );
 	}
 
-	public void modes( final Example9 viewer )
+	public void modes( final AprVolumeRenderer viewer )
 	{
 		runnableAction(
 				() -> viewer.getVisibilityAndGrouping().setFusedEnabled( !viewer.getVisibilityAndGrouping().isFusedEnabled() ),
@@ -85,7 +85,7 @@ public class NavigationActions9 extends Actions
 				TOGGLE_GROUPING, "G" );
 	}
 
-	public void time( final Example9 viewer )
+	public void time( final AprVolumeRenderer viewer )
 	{
 		runnableAction(
 				() -> viewer.nextTimePoint(),
@@ -95,7 +95,7 @@ public class NavigationActions9 extends Actions
 				PREVIOUS_TIMEPOINT, "OPEN_BRACKET", "N" );
 	}
 
-	public void sources( final Example9 viewer )
+	public void sources( final AprVolumeRenderer viewer )
 	{
 		final String[] numkeys = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
 		for ( int i = 0; i < numkeys.length; ++i )
