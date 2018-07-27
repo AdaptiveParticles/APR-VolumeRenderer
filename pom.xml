@@ -23,8 +23,8 @@
     </modules>
 
     <!-- scijava enforcer required fields -->
-    <description>Viewer for APR, based on BigDataViewer</description>
-    <url>https://github.com/krzysg/APR-BigDataViewer</url>
+    <description>Viewer for APR, based on AprVolumeRenderer</description>
+    <url>https://github.com/krzysg/APR-AprVolumeRenderer</url>
     <inceptionYear>2018</inceptionYear>
     <organization>
         <name>MOSAIC group</name>
@@ -56,14 +56,14 @@
         </mailingList>
     </mailingLists>
     <scm>
-        <connection>scm:git:git://github.com/krzysg/APR-BigDataViewer</connection>
-        <developerConnection>scm:git:git@github.com:krzysg/APR-BigDataViewer</developerConnection>
+        <connection>scm:git:git://github.com/krzysg/APR-AprVolumeRenderer</connection>
+        <developerConnection>scm:git:git@github.com:krzysg/APR-AprVolumeRenderer</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/krzysg/APR-BigDataViewer</url>
+        <url>https://github.com/krzysg/APR-AprVolumeRenderer</url>
     </scm>
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/krzysg/APR-BigDataViewer/issues</url>
+        <url>https://github.com/krzysg/APR-AprVolumeRenderer/issues</url>
     </issueManagement>
     <ciManagement>
         <system>None</system>
