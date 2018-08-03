@@ -524,7 +524,7 @@ public class AprVolumeRenderer implements GLEventListener, RequestRepaint
 			volume.init( stack, vw, pv );
 			final List< FillTask > tasks = volume.getFillTasks();
 			numTasks += tasks.size();
-			tasksPerVolume.add( new VolumeAndTasks( tasks, volume, stack.resolutions().size() ) );
+			tasksPerVolume.add( new VolumeAndTasks( tasks, volume, stack.resolutions().size() - 1 ) );
 		}
 
 A:		while ( numTasks > textureCache.getMaxNumTiles() )
