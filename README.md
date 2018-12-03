@@ -27,4 +27,8 @@ mvn pakcage -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 
 If anything is not working as you think it should, or would like it to, please get in touch with us!!!
 
+
+Java 8 required (does not workt with 1.9 or 1.10)
+
+
 [![Join the chat at https://gitter.im/LibAPR](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/LibAPR/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
