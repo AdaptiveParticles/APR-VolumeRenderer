@@ -5,7 +5,7 @@ Viewer app that utilize [jogl-minimal](https://github.com/tpietzsch/jogl-minimal
 ## How to download and build
 * clone repository
 ```
-git clone --recurse https://github.com/krzysg/APR-VolumeRenderer.git
+git clone --recurse https://github.com/AdaptiveParticles/APR-VolumeRenderer.git
 ```
 * build java app
 ```
