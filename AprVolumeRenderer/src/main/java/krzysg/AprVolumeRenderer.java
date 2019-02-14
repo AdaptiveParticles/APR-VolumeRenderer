@@ -899,7 +899,7 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 	    // ------------ Verify input arguments -------------------
 		if (args.length != 1) {
 			System.err.println("Please provide exactly one APR file as a argument. Instead you provided: " + Arrays.asList(args));
-			return;
+			//return;
 		}
 
 		final String inputFileName = args[0];
@@ -910,8 +910,18 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 			return;
 		}
 
+
+
 		// ------------ Load APR ---------------------------------
 		final JavaAPR apr = new JavaAPR();
+
+		if (args.length == 2) {
+			//do something special
+			apr.showLevel();
+		}
+
+		apr.setMaxDownsample(); //max raycast the maximum is a better choice then the mean, especially for very sparse datsets, as the mean does not integrate well across levels.
+
 		System.out.println( "Loading [" + inputFileName + "]" );
 		apr.read( inputFileName );
 		System.out.println( "Loaded image size (w/h/d): " + apr.width() + "/" + apr.height() + "/" + apr.depth() );
@@ -921,12 +931,17 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 
 		final HashMap< Integer, TimePoint > timepointMap = new HashMap<>();
 		final int timepointId = 0;
-		timepointMap.put( timepointId, new TimePoint( timepointId ) );
+
+		for(int tp = 0; tp < apr.numberTimePoints(); tp++){
+			timepointMap.put( tp, new TimePoint( tp ) );
+		}
+
+
 		final HashMap< Integer, BasicViewSetup> setupMap = new HashMap<>();
 		final int setupId = 0;
 		setupMap.put( setupId, new BasicViewSetup( setupId, "APR", null, null ) );
 		final int[] cellDimensions = new int[] { 32, 32, 32 };
-		final int numLevels = 3;
+		final int numLevels = 8;
 		final APRImgLoader imgLoader = new APRImgLoader( apr, cellDimensions, numLevels);
 		final SequenceDescriptionMinimal seq = new SequenceDescriptionMinimal( new TimePoints( timepointMap ), setupMap, imgLoader, null );
 
@@ -936,7 +951,10 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 				1, 0, 0, 0,
 				0, 1, 0, 0,
 				0, 0, 1, 0 );
-		registrations.put( new ViewId( timepointId, setupId ), new ViewRegistration(timepointId, setupId, calibration) );
+
+		for(int tp = 0; tp < apr.numberTimePoints(); tp++){
+			registrations.put( new ViewId( tp, setupId ), new ViewRegistration(tp, setupId, calibration) );
+		}
 
 		final SpimDataMinimal spimData = new SpimDataMinimal( basePath, seq, new ViewRegistrations(registrations) );
 
