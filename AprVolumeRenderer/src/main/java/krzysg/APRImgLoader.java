@@ -58,7 +58,7 @@ public class APRImgLoader implements ViewerImgLoader {
 
         // ------------ Create Img Loader ---------------------------------------------------
         final int setupId = 0;
-        cache = new VolatileGlobalCellCache(numLevels, 6);
+        cache = new VolatileGlobalCellCache(numLevels, 6); //changed to 1
         final APRArrayLoader loader = new APRArrayLoader(apr);
         setupImgLoader = new APRSetupImgLoader(setupId, dimensions, mipmapInfo, cache, loader);
     }
@@ -74,6 +74,7 @@ public class APRImgLoader implements ViewerImgLoader {
     }
 
     private class APRArrayLoader implements CacheArrayLoader< VolatileShortArray > {
+        private Boolean loading = false;
         private final JavaAPR apr;
         private final ThreadLocal<ShortBuffer> buffer = ThreadLocal.withInitial(
                 () -> ByteBuffer.allocateDirect(2).order(ByteOrder.nativeOrder()).asShortBuffer());
@@ -84,23 +85,66 @@ public class APRImgLoader implements ViewerImgLoader {
         }
 
         @Override
-        public VolatileShortArray loadArray(final int timepoint, final int setup, final int level, final int[] dimensions, final long[] min ) throws InterruptedException {
-            final int sizeOfReconstructedPatch = (int) Intervals.numElements(dimensions);
+        public synchronized VolatileShortArray loadArray(final int timepoint, final int setup, final int level, final int[] dimensions, final long[] min ) throws InterruptedException {
+            int sizeOfReconstructedPatch = (int) Intervals.numElements(dimensions);
 
-            if (buffer.get().capacity() < sizeOfReconstructedPatch) {
-                buffer.set(ByteBuffer.allocateDirect(2 * sizeOfReconstructedPatch).order(ByteOrder.nativeOrder()).asShortBuffer());
+
+            if((timepoint != apr.timePoint()) && !loading){
+
+                loading = true;
+                System.out.println( "Time Point");
+                apr.read(timepoint);
+                loading = false;
+                this.notifyAll();
+
             }
 
-            // reconstruct APR starting in the begin of buffer
-            final ShortBuffer shortBuffer = buffer.get();
-            shortBuffer.rewind();
-            apr.reconstructToBuffer(
-                    (int) min[0], (int) min[1], (int) min[2],    // (x,y,z) of start reconstruction
+            while (loading) {
+                try {
+                    this.wait();
+                } catch(InterruptedException e) {}
+            }
+
+            Boolean valid = true;
+
+
+
+            int loadPatch = apr.checkReconstructionRequired((int) min[0], (int) min[1], (int) min[2],    // (x,y,z) of start reconstruction
                     dimensions[0], dimensions[1], dimensions[2], // (width, height, depth) of reconstruction
-                    level, shortBuffer);                         // on which level reconstruction is done and output buffer
+                    level);
+
+            //loadPatch = 1;
+
+            //System.out.println( level);
 
             final short[] array = new short[sizeOfReconstructedPatch];
-            shortBuffer.get(array, 0, sizeOfReconstructedPatch);
+
+            if(loadPatch==0) {
+                valid = false;
+                //sizeOfReconstructedPatch=0;
+                //System.out.println( "Ignored" );
+
+            } else {
+                // reconstruct APR starting in the begin of buffer
+
+                if (buffer.get().capacity() < sizeOfReconstructedPatch) {
+                    buffer.set(ByteBuffer.allocateDirect(2 * sizeOfReconstructedPatch).order(ByteOrder.nativeOrder()).asShortBuffer());
+                }
+
+                final ShortBuffer shortBuffer = buffer.get();
+                shortBuffer.rewind();
+
+                apr.reconstructToBuffer(
+                        (int) min[0], (int) min[1], (int) min[2],    // (x,y,z) of start reconstruction
+                        dimensions[0], dimensions[1], dimensions[2], // (width, height, depth) of reconstruction
+                        level, shortBuffer);                         // on which level reconstruction is done and output buffer
+
+                shortBuffer.get(array, 0, sizeOfReconstructedPatch);
+
+            }                      // on which level reconstruction is done and output buffer
+
+
+
             return new VolatileShortArray(array, true);
         }
 

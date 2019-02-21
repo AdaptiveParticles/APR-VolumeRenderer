@@ -911,7 +911,6 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 		}
 
 
-
 		// ------------ Load APR ---------------------------------
 		final JavaAPR apr = new JavaAPR();
 
@@ -940,8 +939,8 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 		final HashMap< Integer, BasicViewSetup> setupMap = new HashMap<>();
 		final int setupId = 0;
 		setupMap.put( setupId, new BasicViewSetup( setupId, "APR", null, null ) );
-		final int[] cellDimensions = new int[] { 32, 32, 32 };
-		final int numLevels = 8;
+		final int[] cellDimensions = new int[] {64, 	64, 64 };
+		final int numLevels = apr.levelMax() - apr.levelMin() - 1;
 		final APRImgLoader imgLoader = new APRImgLoader( apr, cellDimensions, numLevels);
 		final SequenceDescriptionMinimal seq = new SequenceDescriptionMinimal( new TimePoints( timepointMap ), setupMap, imgLoader, null );
 
@@ -964,10 +963,10 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 		final int renderHeight = 480;
 		final int ditherWidth = 3;
 		final int numDitherSamples = 8;
-		final int cacheBlockSize = 32;
-		final int maxCacheSizeInMB = 300;
+		final int cacheBlockSize = 16;
+		final int maxCacheSizeInMB = 150;
 		final double dCam = 2000;
-		final double dClip = 1000;
+		final double dClip = 400;
 
 		run( spimData, windowWidth, windowHeight, renderWidth, renderHeight, ditherWidth, numDitherSamples, cacheBlockSize, maxCacheSizeInMB, dCam, dClip );
 	}
