@@ -8,6 +8,7 @@ package krzysg;
  * Krzysztof Gonciarz (adapted from Example9 from jogl-minimal by Tobias)
  */
 
+import adaptiveparticles.apr.AprBasicOps;
 import bdv.cache.CacheControl;
 import bdv.spimdata.SequenceDescriptionMinimal;
 import bdv.spimdata.SpimDataMinimal;
@@ -30,7 +31,6 @@ import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
-import mosaic.JavaAPR;
 import mpicbg.spim.data.SpimDataException;
 import mpicbg.spim.data.generic.sequence.BasicViewSetup;
 import mpicbg.spim.data.registration.ViewRegistration;
@@ -75,8 +75,8 @@ import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.Buffer;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 
 import static bdv.BigDataViewer.initSetups;
@@ -84,10 +84,8 @@ import static bdv.viewer.VisibilityAndGrouping.Event.VISIBILITY_CHANGED;
 import static com.jogamp.opengl.GL.*;
 import static com.jogamp.opengl.GL2ES2.GL_RED;
 import static com.jogamp.opengl.GL2ES2.GL_TEXTURE_3D;
-import static tpietzsch.backend.Texture.InternalFormat.R16;
-
-
 import static krzysg.AprVolumeRenderer.RepaintType.*;
+import static tpietzsch.backend.Texture.InternalFormat.R16;
 
 public class AprVolumeRenderer implements GLEventListener, RequestRepaint
 {
@@ -911,7 +909,7 @@ A:		while ( numTasks > textureCache.getMaxNumTiles() )
 		}
 
 		// ------------ Load APR ---------------------------------
-		final JavaAPR apr = new JavaAPR();
+		final AprBasicOps apr = new AprBasicOps();
 		System.out.println( "Loading [" + inputFileName + "]" );
 		apr.read( inputFileName );
 		System.out.println( "Loaded image size (w/h/d): " + apr.width() + "/" + apr.height() + "/" + apr.depth() );
